@@ -6,32 +6,12 @@ import { Button } from "react-bootstrap";
 import paginationFactory, { SizePerPageDropdownStandalone } from 'react-bootstrap-table2-paginator';
 import Modal from './Modal';
 import DetailDataList from "./DetailDataList";
+import ClearButton from "./ClearButton";
 
 const { SearchBar } = Search;
 
 let nameFilter;
 let priceFilter;
-
-const ClearButton = props => {
-  const handleClick = () => {
-    props.onSearch("");
-    props.clearAllFilter();
-  };
-  return (
-    <Button
-      variant="secondary"
-      onClick={handleClick}
-      style={{
-        fontSize: "16px",
-        padding: "5px",
-        margin: "10px",
-        height: "40px"
-      }}
-    >
-      Clear
-    </Button>
-  );
-};
 
 
 const myOptions = {
@@ -79,8 +59,8 @@ class Table extends React.Component {
           formatter: this.linkToDetay,
           sort: true
         }
-      ],
-
+      ]
+      ,
       detailData : {},
       bikeID : ""
     };
@@ -105,7 +85,9 @@ class Table extends React.Component {
   linkToDetay = (cell, row, rowIndex, formatExtraData) => {
     return (
       <Button
-        onClick={() => {          
+        onClick={() => {  
+          
+          //Detay datayı orjinal API den al.. (GraphQL APi den de alınabilir.)
           fetch("https://kovan-dummy-api.herokuapp.com/items?bike_id="+row.bike_id)
           .then(response => response.json())
           .then((json) => {
@@ -114,7 +96,6 @@ class Table extends React.Component {
             console.log(json.data.bike);            
             
             //State i güncelle..
-            //Todo : Class component yerine Function component yapılabilir.
             this.setState({ detailData: json.data.bike });
             
             this.showModal(this);
@@ -131,12 +112,9 @@ class Table extends React.Component {
     priceFilter("");
   }
 
-
-
   render() {
 
-    //todo : 
-    //props can be moved to ContextAPI
+    //todo : props kullanımı çoğalırsa ContextAPI/Redux tercih edilmelidir.
     const products = this.props.sentContent;        
     return (
       <div>
