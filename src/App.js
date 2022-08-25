@@ -1,12 +1,8 @@
-import './App.css';
 import { useEffect,useState } from "react";
-import { ApolloClient, InMemoryCache, useQuery, gql,ApolloProvider } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 
-import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import filterFactory,{textFilter} from 'react-bootstrap-table2-filter';
-
-const PAGE_SIZE = 3;
+import  "../src/styles.css"
+import Table from 'Components/Table';
 
 const LIS_RESULT = gql`
 query {
@@ -22,86 +18,75 @@ query {
 `;
 
 
-function App(props) {
+function App() {
 
-  const {data,loading,error } = useQuery(LIS_RESULT); 
-
-  // useEffect(() => {    
-  //   setMyData(data.items.data.bikes);
-
-  // }, [])
-
-  const [endCursor, setEndCursor] = useState("");
-  const [myData, setMyData] = useState([]);
+  const {data,loading,error } = useQuery(LIS_RESULT);   
  
-  // GRAPHQL Data getir..
-  const _client = props.clientProp;
-
   if(loading) {
     return <div> Yükleniyor..</div>
-  }
-    
-  console.log("---- GRAPH API den GELEN DATA  -----");
-  console.log(data.items.data.bikes);
+  }  
 
-  if(data == null  || data.items.data.bikes.length < 1) {
-    return <div> BEKLENMEDİK BİR HATA OLDU. TEKRAR DENEYİN !</div>
+  if(data == null || data.items.data.bikes == null) {
+    return <>
+        <h2>ANLIK SUNUCU HATASI</h2>
+        <h3>Anlık bir hata oluştu. Lütfen Tekrar deneyin.</h3>
+    </>
   }
   
   if(error) {
-    console.log("HATA ! " + error);
-    return <div> error </div>
+    console.log("HATA ! " + error);    
+    return <div> {error} </div>
+  } else {
+
+    const myColumns = [
+        {
+          header : "bike_id",
+          accessor:"bike_id"
+        },
+        {
+          header : "vehicle_type" ,
+          accessor:"vehicle_type type"
+        }]
+    
+        console.log("---- GELEN DATA  -----");
+        console.log(data.items.data.bikes);
+    
+        // if(data == null) {
+        //     return (    
+        //         <div className="App">
+        //           <h1>ANLIK HATA</h1>
+        //           <h2>Anlık bir hata oluştu. Tekrar deneyin.</h2>
+        //         </div>
+        //       );
+        // }
+
+      const tempData = data.items.data.bikes.map((bike) => {
+        return (
+          {
+            bike_id: bike.bike_id,
+            vehicle_type: bike.vehicle_type,
+          });
+        });
+    
+    
+    
+        if(tempData == null) {
+            return (    
+                <div className="App">
+                  <h1>ANLIK HATA</h1>
+                  <h2>Anlık bir hata oluştu. Tekrar deneyin.</h2>
+                </div>
+              );
+        } else {
+            return (    
+                <div className="App">
+                  <Table sentContent = {tempData}  />
+                </div>
+              );
+        }
   }
 
-  const myColumns = [
-    {
-        dataField : "bike_id",
-        text:"bike_id",        
-        sort:true,
-        filter:textFilter()
-        //validator : numericValidator
-    },
-    {
-        dataField : "vehicle_type" ,
-        text:"vehicle_type type",
-        sort:true,
-        filter:textFilter()
-    }
-  ]
-
-  const tempData= data.items.data.bikes.map((bike) => {
-    return (
-      {
-        bike_id: bike.bike_id,
-        vehicle_type: bike.vehicle_type,
-      });
-    });
-
-    console.log("---- GELEN DATA - 2  -----");
-    console.log(tempData);
   
-
-  return (
-    
-    <div className="App">
-
-      <h2> BIKE LIST</h2>
-
-
-       <BootstrapTable
-        keyField='bike_id'
-        //data={data.items.data.bikes}
-        data={ tempData}
-        columns= {myColumns}
-        striped
-        hover
-        condensed
-        pagination={paginationFactory()}
-        >
-        </BootstrapTable> 
-        
-    </div>
-  );
 }
 
 export default App;
