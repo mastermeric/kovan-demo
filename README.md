@@ -10,10 +10,12 @@
 # Known Issues :     
   - 1-) Random server erros handled at GUI. Needs to be maintained.
 
+  ![known_issue_1](https://user-images.githubusercontent.com/49819371/186632040-3c0da937-fcbb-4f98-9bd8-4aa72677d007.jpg)
+
 
 # Screens For Demo:      
 
-![UI_1](https://user-images.githubusercontent.com/49819371/186631503-48b9bec6-dbb5-4db2-a67e-18b6954baf51.jpg)
-
-
-![UI_2](https://user-images.githubusercontent.com/49819371/186631520-0d5da775-fcd4-4d7d-8757-14aca9205f77.jpg)
+  
+![UI_1](https://user-images.githubusercontent.com/49819371/186632390-9730e93b-42e8-4f73-8618-2be52775447a.jpg)
+  
+![UI_2](https://user-images.githubusercontent.com/49819371/186632403-cdca2cb9-8d47-4c22-a2c0-7281137190df.jpg)
