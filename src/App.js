@@ -17,7 +17,6 @@ query {
 }
 `;
 
-
 function App() {
 
   const {data,loading,error } = useQuery(LIS_RESULT);   
@@ -38,52 +37,33 @@ function App() {
     return <div> {error} </div>
   } else {
 
-    const myColumns = [
-        {
-          header : "bike_id",
-          accessor:"bike_id"
-        },
-        {
-          header : "vehicle_type" ,
-          accessor:"vehicle_type type"
-        }]
-    
-        console.log("---- GELEN DATA  -----");
-        console.log(data.items.data.bikes);
-    
-        // if(data == null) {
-        //     return (    
-        //         <div className="App">
-        //           <h1>ANLIK HATA</h1>
-        //           <h2>Anlık bir hata oluştu. Tekrar deneyin.</h2>
-        //         </div>
-        //       );
-        // }
+  console.log("---- GELEN DATA  -----");
+  console.log(data.items.data.bikes);
 
-      const tempData = data.items.data.bikes.map((bike) => {
-        return (
-          {
-            bike_id: bike.bike_id,
-            vehicle_type: bike.vehicle_type,
-          });
-        });
-    
-    
-    
-        if(tempData == null) {
-            return (    
-                <div className="App">
-                  <h1>ANLIK HATA</h1>
-                  <h2>Anlık bir hata oluştu. Tekrar deneyin.</h2>
-                </div>
-              );
-        } else {
-            return (    
-                <div className="App">
-                  <Table sentContent = {tempData}  />
-                </div>
-              );
-        }
+
+  const tempData = data.items.data.bikes.map((bike) => {
+    return (
+      {
+        bike_id: bike.bike_id,
+        vehicle_type: bike.vehicle_type,
+      });
+    });
+
+
+    if(tempData == null) {
+        return (    
+            <div className="App">
+              <h1>ANLIK HATA</h1>
+              <h2>Anlık bir hata oluştu. Tekrar deneyin.</h2>
+            </div>
+          );
+    } else {
+        return (    
+            <div className="App">
+              <Table sentContent = {tempData}  />
+            </div>
+          );
+    }
   }
 
   

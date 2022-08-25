@@ -1,19 +1,16 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
-//import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
-
 import { Button } from "react-bootstrap";
 import paginationFactory, { SizePerPageDropdownStandalone } from 'react-bootstrap-table2-paginator';
 import Modal from './Modal';
-import { useState } from "react";
+import DetailDataList from "./DetailDataList";
+
 const { SearchBar } = Search;
 
 let nameFilter;
 let priceFilter;
-// let stockFilter;
-// let originFilter;
 
 const ClearButton = props => {
   const handleClick = () => {
@@ -37,7 +34,7 @@ const ClearButton = props => {
 };
 
 
-const options = {
+const myOptions = {
   sizePerPageList : [ 
     { text: '5', value: 5}, 
     { text: '10', value: 10}, 
@@ -47,12 +44,10 @@ const options = {
   ]
 };
 
-
 class Table extends React.Component {
 
   constructor() {
     super();
-
     
     this.state = {
       
@@ -95,6 +90,8 @@ class Table extends React.Component {
     this.hideModal = this.hideModal.bind(this);
   }
 
+  //this.setState({myOptions : customOptions.myOptions});
+  
   showModal = (e) => {
     this.setState({ show: true });
     console.log(e);
@@ -132,8 +129,6 @@ class Table extends React.Component {
   clearAllFilter() {
     nameFilter("");
     priceFilter("");
-    // originFilter("");
-    // stockFilter("");
   }
 
 
@@ -142,61 +137,16 @@ class Table extends React.Component {
 
     //todo : 
     //props can be moved to ContextAPI
-    const products =this.props.sentContent;
-
+    const products = this.props.sentContent;        
     return (
       <div>
 
         <Modal show={this.state.show} handleClose={this.hideModal}>                    
-
             <>
-            <h2> BIKE INFO DETAILS  </h2>
-            <br></br>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <th scope="row">Bike ID</th>
-                  <td>{this.state.detailData.bike_id}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Lat</th>
-                  <td>{this.state.detailData.lat}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Lon</th>
-                  <td>{this.state.detailData.lon}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Vehicle Type</th>
-                  <td>{this.state.detailData.vehicle_type}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Android Version</th>
-                  <td>{this.state.detailData.android}</td>
-                </tr>
-                <tr>
-                  <th scope="row">IOS Version</th>
-                  <td>{this.state.detailData.ios}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Total Bookings</th>
-                  <td>{this.state.detailData.total_bookings}</td>
-                </tr>
-              </tbody>
-            </table>
-            </>
-{/* 
-           <>
-            <h2> BIKE INFO DETAILS  </h2>
-            <p>{this.state.detailData.bike_id}</p>
-            <p>{this.state.detailData.lat}</p>
-            <p>{this.state.detailData.lon}</p>
-            <p>{this.state.detailData.vehicle_type}</p>
-            <p>{this.state.detailData.android}</p>
-            <p>{this.state.detailData.ios}</p>
-            <p>{this.state.detailData.total_bookings}</p>   
-          </>      */}
-          
+              <h2> BIKE INFO DETAILS  </h2>
+              <br></br>
+              <DetailDataList dataFromParent = {this.state.detailData} ></DetailDataList>           
+            </>          
         </Modal>
 
         <h1>KOVAN STUDIO - BIKE LIST</h1>
@@ -224,7 +174,7 @@ class Table extends React.Component {
                 striped
                 hover
                 condensed
-                pagination={paginationFactory(options)}
+                pagination={paginationFactory(myOptions)}
               />
             </div>
           )}
