@@ -9,8 +9,8 @@
 
 # Known Issues :     
   - 1-) Authentication is missing, need to be added.
-  - 2-) Random server erros handled at GUI. Needs to be maintained.
-  - 3-) .Env file should be used to store variables such as api endpoints etc.  
+  - 2-) .Env file should be used to store variables such as api endpoints etc.  
+  - 3-) Random server communication erros handled at GUI leveş such in below screen. (Needs to be maintained.)
 
   ![known_issue_1](https://user-images.githubusercontent.com/49819371/186632040-3c0da937-fcbb-4f98-9bd8-4aa72677d007.jpg)
 
